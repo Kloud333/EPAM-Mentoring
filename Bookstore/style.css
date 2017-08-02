@@ -1,0 +1,41 @@
+.addForm, .searchForm, .table {
+    margin-bottom: 5px;
+}
+
+.addForm {
+    text-align: center;
+    background: lightblue;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.searchForm {
+    text-align: center;
+    background: yellow;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-spacing: inherit;
+}
+
+tr {
+    height: 200px;
+    background: greenyellow;
+}
+
+.infoColumn {
+    width: 75%;
+}
+
+.priceColumn {
+    width: 25%;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
