@@ -60,7 +60,7 @@ include_once 'searchPost.php';
             <input class="editPostTitle" name="addPostTitle" value="<? print $editPosts[0]['title'] ?>">
             <textarea class="editPostText" name="addPostText"
                       placeholder=""> <? print $editPosts[0]['text'] ?> </textarea>
-            <input class="saveButton" type="submit" name="save" value="Save">
+            <input class="saveButton button" type="submit" name="save" value="Save">
             <input class="cancelButton button" type="submit" name="cancel" value="Cancel">
         </form>
     </div>

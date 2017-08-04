@@ -146,7 +146,7 @@ a {
 
 /*-------- Add Area --------*/
 
-.addPostArea {
+.addPostArea, .editPostForm {
     margin: 10px 0;
 }
 
@@ -157,7 +157,8 @@ a {
 
 /*-------- Add Area And Edit Area --------*/
 
-.editPostForm, .addPostForm * {
+.editPostForm *, .addPostForm * {
+    padding: 5px;
     margin-bottom: 5px;
 }
 
