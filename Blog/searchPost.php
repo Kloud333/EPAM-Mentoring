@@ -10,4 +10,4 @@ if ($_GET['searchInput']) {
 }
 
 $sth->execute();
-$postsArray = $sth->fetchAll(PDO::FETCH_ASSOC);
+$allPostsArray = $sth->fetchAll(PDO::FETCH_ASSOC);

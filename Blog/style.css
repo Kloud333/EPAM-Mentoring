@@ -14,7 +14,7 @@ body {
     font-size: 14px;
     line-height: 1.2;
     font-family: Nexa-Light;
-    background-color: #ededed;
+    background: #ededed;
 }
 
 li {
@@ -44,6 +44,7 @@ a {
     clear: both;
 }
 
+/*-------- Index.php --------*/
 /*-------- Header --------*/
 
 .header {
@@ -58,10 +59,11 @@ a {
 }
 
 .searchForm {
-    float: right;
+    float: left;
+    margin-left: 10px;
 }
 
-.searchInput, .searchButton {
+.searchInput, .searchButton, .loginButton, .registrationButton {
     height: 28px;
     border-radius: 3px;
     border-style: none;
@@ -74,6 +76,28 @@ a {
 
 .searchButton {
     width: 100px;
+}
+
+.loginButton, .registrationButton {
+    display: block;
+    float: right;
+    width: 100px;
+    margin-left: 5px;
+    background: lightblue;
+}
+
+.registrationButton {
+
+    background: lawngreen;
+}
+
+.lockedUpUser {
+    color: white;
+    display: block;
+    padding-top: 5px;
+    text-align: center;
+    width: 100px;
+    float: right;
 }
 
 /*-------- Wrapper --------*/
@@ -180,4 +204,61 @@ a {
     font-size: 20px;
     text-align: center;
 }
+
+/*-------- loginUserPage.php - registrationUserPage.php --------*/
+
+.loginArea, .registrationArea {
+    margin: 10px 0;
+    padding: 10px;
+    background: #ffffff;
+}
+
+.loginForm, .registrationForm {
+    padding-top: 50px;
+    height: 200px;
+    width: 100%;
+    text-align: center;
+}
+
+.loginError, .registrationError {
+    font-size: 20px;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.loginLabels, .loginInputs, .registrationLabels, .registrationInputs {
+    float: left;
+    text-transform: uppercase;
+}
+
+.loginLabels, .registrationLabels {
+    width: 35%;
+    text-align: right;
+}
+
+.loginInputs, .registrationInputs {
+    width: 65%;
+}
+
+.loginLabels label, .loginInputs input, .registrationLabels label, .registrationInputs input {
+    display: block;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.loginLabels label, .registrationLabels label {
+    padding: 5px 10px 0 0;
+    font-size: 15px;
+}
+
+.loginInputs input, .registrationInputs input {
+    width: 350px;
+    padding: 10px;
+}
+
+
+
+
+
+
 
