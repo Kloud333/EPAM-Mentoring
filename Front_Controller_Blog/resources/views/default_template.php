@@ -14,7 +14,7 @@
     <a class="slogan" href="<?= \app\core\createUrl('main_page') ?>"><h1>Blog Lite</h1></a>
 
     <form class="searchForm" name="searchForm" method="get"
-          action="<?= (!isset($cabinet) ? \app\core\createUrl('posts') : \app\core\createUrl('userCabinetPage', ['cabinet' => 'cabinet'])) ?>">
+          action="<?= (!isset($cabinet) ? \app\core\createUrl('posts') : \app\core\createUrl('user_cabinet_page', ['cabinet' => 'cabinet'])) ?>">
         <input class="searchInput" name="search" required type="text"/>
         <input class="searchButton" type="submit" value="Search"/>
     </form>
@@ -28,12 +28,12 @@
             <button class="loginButton">Log Out</button>
         </form>
         <a class="lockedUpUser"
-           href="<?= \app\core\createUrl('userCabinetPage', ['cabinet' => 'cabinet']) ?>">Hi <?= ucfirst($app['user']['username']) ?></a>
+           href="<?= \app\core\createUrl('user_cabinet_page', ['cabinet' => 'cabinet']) ?>">Hi <?= ucfirst($app['user']['username']) ?></a>
     <?php } else { ?>
-        <a href="<?= \app\core\createUrl('loginPage') ?>">
+        <a href="<?= \app\core\createUrl('login_page') ?>">
             <button class="loginButton">Login</button>
         </a>
-        <a href="<?= \app\core\createUrl('registrationPage') ?>">
+        <a href="<?= \app\core\createUrl('registration_page') ?>">
             <button class="registrationButton">Registration</button>
         </a>
     <?php } ?>

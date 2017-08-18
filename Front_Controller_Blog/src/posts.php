@@ -21,27 +21,27 @@ function index($cabinet = null, $edit = null) {
 
     if (!$cabinet) {
         if ($_GET['search']) {
-            $query = $dbh->prepare('SELECT COUNT(1) FROM blog_posts WHERE title LIKE :title');
-            $query->bindValue(':title', '%' . $_GET['search'] . '%');
-            $query->execute();
+            $sth = $dbh->prepare('SELECT COUNT(1) FROM blog_posts WHERE title LIKE :title');
+            $sth->bindValue(':title', '%' . $_GET['search'] . '%');
+            $sth->execute();
         } else {
-            $query = $dbh->prepare('SELECT COUNT(1) FROM blog_posts');
-            $query->execute();
+            $sth = $dbh->prepare('SELECT COUNT(1) FROM blog_posts');
+            $sth->execute();
         }
     } else {
         if ($_GET['search']) {
-            $query = $dbh->prepare('SELECT COUNT(1) FROM blog_posts WHERE user = :user AND title LIKE :title');
-            $query->bindValue(':title', '%' . $_GET['search'] . '%');
-            $query->bindValue(':user', $app['user']['username']);
-            $query->execute();
+            $sth = $dbh->prepare('SELECT COUNT(1) FROM blog_posts WHERE user = :user AND title LIKE :title');
+            $sth->bindValue(':title', '%' . $_GET['search'] . '%');
+            $sth->bindValue(':user', $app['user']['username']);
+            $sth->execute();
         } else {
-            $query = $dbh->prepare('SELECT COUNT(1) FROM blog_posts WHERE user = ?');
-            $query->execute([$app['user']['username']]);
+            $sth = $dbh->prepare('SELECT COUNT(1) FROM blog_posts WHERE user = ?');
+            $sth->execute([$app['user']['username']]);
         }
     }
 
 
-    $postsArray = $query->fetchAll();
+    $postsArray = $sth->fetchAll();
 
     $countOfPages = 4;
     $postsCount = $postsArray[0][0];
@@ -52,36 +52,36 @@ function index($cabinet = null, $edit = null) {
 
     if (!$cabinet) {
         if ($_GET['search']) {
-            $query = $dbh->prepare('SELECT * FROM blog_posts WHERE title LIKE :title ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
-            $query->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
-            $query->bindValue(':posts', $posts, \PDO::PARAM_INT);
-            $query->bindValue(':title', '%' . $_GET['search'] . '%');
+            $sth = $dbh->prepare('SELECT * FROM blog_posts WHERE title LIKE :title ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
+            $sth->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
+            $sth->bindValue(':posts', $posts, \PDO::PARAM_INT);
+            $sth->bindValue(':title', '%' . $_GET['search'] . '%');
         } else {
-            $query = $dbh->prepare('SELECT * FROM blog_posts ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
-            $query->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
-            $query->bindValue(':posts', $posts, \PDO::PARAM_INT);
+            $sth = $dbh->prepare('SELECT * FROM blog_posts ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
+            $sth->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
+            $sth->bindValue(':posts', $posts, \PDO::PARAM_INT);
         }
     } else {
         if ($_GET['search']) {
-            $query = $dbh->prepare('SELECT * FROM blog_posts WHERE user = :user AND title LIKE :title ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
-            $query->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
-            $query->bindValue(':posts', $posts, \PDO::PARAM_INT);
-            $query->bindValue(':title', '%' . $_GET['search'] . '%');
-            $query->bindValue(':user', $app['user']['username']);
+            $sth = $dbh->prepare('SELECT * FROM blog_posts WHERE user = :user AND title LIKE :title ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
+            $sth->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
+            $sth->bindValue(':posts', $posts, \PDO::PARAM_INT);
+            $sth->bindValue(':title', '%' . $_GET['search'] . '%');
+            $sth->bindValue(':user', $app['user']['username']);
         } else {
-            $query = $dbh->prepare('SELECT * FROM blog_posts  WHERE user = :user ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
-            $query->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
-            $query->bindValue(':posts', $posts, \PDO::PARAM_INT);
-            $query->bindValue(':user', $app['user']['username']);
+            $sth = $dbh->prepare('SELECT * FROM blog_posts  WHERE user = :user ORDER BY blog_posts.date DESC LIMIT :countOfPages OFFSET :posts');
+            $sth->bindValue(':countOfPages', $countOfPages, \PDO::PARAM_INT);
+            $sth->bindValue(':posts', $posts, \PDO::PARAM_INT);
+            $sth->bindValue(':user', $app['user']['username']);
         }
     }
 
-    $query->execute();
+    $sth->execute();
 
-    $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+    $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
 
-    return renderView(['default-template.php', 'posts/posts_list.php', 'posts/add_post.php'], ['articles' => $result, 'pages' => $pages, 'page' => $page, 'link' => $link, 'cabinet' => $cabinet]);
+    return renderView(['default_template.php', 'posts/posts_list.php', 'posts/add_post.php'], ['articles' => $result, 'pages' => $pages, 'page' => $page, 'link' => $link, 'cabinet' => $cabinet]);
 }
 
 function postById($id) {
@@ -90,13 +90,13 @@ function postById($id) {
     /** @var \PDO $dbh */
     $dbh = $app['db'];
 
-    $query = $dbh->prepare('SELECT * FROM blog_posts WHERE id= ?');
+    $sth = $dbh->prepare('SELECT * FROM blog_posts WHERE id= ?');
 
-    $query->execute([$id]);
+    $sth->execute([$id]);
 
-    $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+    $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
-    return renderView(['default-template.php', 'posts/post_by_id.php'], ['articles' => $result]);
+    return renderView(['default_template.php', 'posts/post_by_id.php'], ['articles' => $result]);
 }
 
 function addPost() {
@@ -115,10 +115,10 @@ function deletePost() {
 
     /** @var \PDO $dbh */
     $dbh = $app['db'];
-    $query = $dbh->prepare('DELETE FROM blog_posts WHERE id = ?');
-    $query->execute([$_POST['postId']]);
-    //core\addFlash('danger', 'Username or password are incorrect');
-    core\redirect('userCabinetPage', ['cabinet' => 'cabinet']);
+    $sth = $dbh->prepare('DELETE FROM blog_posts WHERE id = ?');
+    $sth->execute([$_POST['postId']]);
+    //core\addFlash();
+    core\redirect('user_cabinet_page', ['cabinet' => 'cabinet']);
 }
 
 function editPost($num) {
@@ -127,9 +127,10 @@ function editPost($num) {
     $dbh = $app['db'];
     $sth = $dbh->prepare('SELECT * FROM blog_posts WHERE id = ?');
     $sth->execute([$num]);
+    //core\addFlash();
     $editPosts = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
-    return renderView(['default-template.php', 'posts/edit_post.php'], ['editPosts' => $editPosts]);
+    return renderView(['default_template.php', 'posts/edit_post.php'], ['editPosts' => $editPosts]);
 }
 
 function saveEdit() {
@@ -140,7 +141,7 @@ function saveEdit() {
     $sth = $dbh->prepare('UPDATE blog_posts SET title = ?, text = ? WHERE id = ?');
     $sth->execute([$_POST['addPostTitle'], $_POST['addPostText'], $_POST['postId']]);
     //core\addFlash();
-    core\redirect('userCabinetPage', ['cabinet' => 'cabinet']);
+    core\redirect('user_cabinet_page', ['cabinet' => 'cabinet']);
 
 }
 

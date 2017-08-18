@@ -10,43 +10,33 @@ use app\core;
  * @return null|string
  */
 function loginPage() {
-    return renderView(['default-template.php', 'users/login.php']);
+    return renderView(['default_template.php', 'users/login.php']);
 }
 
 function registrationPage() {
-    return renderView(['default-template.php', 'users/registration.php']);
+    return renderView(['default_template.php', 'users/registration.php']);
 }
 
 function login() {
 
-    global $app;
-
-    /** @var \PDO $dbh */
-    $dbh = $app['db'];
-
-    $sth = $dbh->prepare('SELECT * FROM users WHERE username=?');
-    $sth->execute([$_POST['username']]);
-    $users = $sth->fetchAll(\PDO::FETCH_ASSOC);
-    $app['users'] = $users;
-
     if (!($_POST['username']) || !($_POST['password'])) {
         core\addFlash('danger', 'Not enough parameters');
-        core\redirect('loginPage');
+        core\redirect('login_page');
     }
 
     if (!($user = loadUserByUsername($_POST['username']))) {
         core\addFlash('danger', 'Username or password are incorrect');
-        core\redirect('loginPage');
+        core\redirect('login_page');
     }
 
     if (!password_verify((string)$_POST['password'], $user['password'])) {
         core\addFlash('danger', 'Username or password are incorrect');
-        core\redirect('loginPage');
+        core\redirect('login_page');
     }
 
     core\persistUser($user);
 
-    core\addFlash('success', 'You successfully logged!');
+    core\addFlash('success', 'You are successfully logged!');
 
     core\redirect('main_page');
 }
@@ -59,7 +49,14 @@ function logout() {
 function loadUserByUsername($username) {
     global $app;
 
-    return current(array_filter($app['users'], function ($user) use ($username) {
+    /** @var \PDO $dbh */
+    $dbh = $app['db'];
+
+    $sth = $dbh->prepare('SELECT * FROM users WHERE username=?');
+    $sth->execute([$_POST['username']]);
+    $users = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+    return current(array_filter($users, function ($user) use ($username) {
         return $user['username'] == $username;
     }));
 }
@@ -76,12 +73,12 @@ function registration() {
 
     if (!($_POST['username']) || !($_POST['email']) || (!$_POST['password'])) {
         core\addFlash('danger', 'Not enough parameters');
-        core\redirect('registrationPage');
+        core\redirect('registration_page');
     }
 
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         core\addFlash('danger', 'Incorrect email');
-        core\redirect('registrationPage');
+        core\redirect('registration_page');
     }
 
     if (!($_POST['username'] == $user[0]['username'])) {
@@ -92,7 +89,7 @@ function registration() {
         core\redirect('main_page');
     } else {
         core\addFlash('danger', 'Username already exists!');
-        core\redirect('registrationPage');
+        core\redirect('registration_page');
     }
 
 

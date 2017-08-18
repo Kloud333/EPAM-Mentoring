@@ -16,25 +16,25 @@ return [
         'function' => 'app\\src\\posts\\index',
         'methods' => ['GET']
     ],
-    'postById' => [
+    'post_by_id' => [
         'path' => '/post/{id}',
         'file' => 'posts.php',
         'function' => 'app\\src\\posts\\postById',
         'methods' => ['GET']
     ],
-    'loginPage' => [
+    'login_page' => [
         'path' => '/login',
         'file' => 'users.php',
         'function' => 'app\\src\\users\\loginPage',
         'methods' => ['GET']
     ],
-    'registrationPage' => [
+    'registration_page' => [
         'path' => '/registration',
         'file' => 'users.php',
         'function' => 'app\\src\\users\\registrationPage',
         'methods' => ['GET']
     ],
-    'userCabinetPage' => [
+    'user_cabinet_page' => [
         'path' => '/user/{cabinet}/',
         'file' => 'posts.php',
         'function' => 'app\\src\\posts\\index',
@@ -70,7 +70,7 @@ return [
         'function' => 'app\\src\\posts\\deletePost',
         'methods' => ['POST']
     ],
-    'edit_post_page' => [
+    'edit_post' => [
         'path' => '/edit/post/{num}',
         'file' => 'posts.php',
         'function' => 'app\\src\\posts\\editPost',
